@@ -8,6 +8,7 @@ export default function SelectFormGroup({
   type,
   data,
   onChange,
+  value,
 }) {
   return (
     <div className="col-6">
@@ -16,8 +17,9 @@ export default function SelectFormGroup({
           <div className="col-3">
             <Form.Label>{label}</Form.Label>
           </div>
-          <div className="col-5">
+          <div className="col-6">
             <Form.Select
+              value={value}
               onChange={onChange}
               aria-label="Default select example"
             >

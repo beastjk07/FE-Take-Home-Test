@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { api } from "../utils/Api";
+import { getApi, postApi } from "../utils/Api";
 import SelectFormGroup from "./SelectFormGroup";
 import TextFormGroup from "./TextFormGroup";
 
@@ -17,9 +17,15 @@ export default function UserForm() {
     state: "",
   });
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const [validateData, setValidateData] = useState(true);
+
   useEffect(() => {
     async function fetchApi() {
-      let res = await api("https://frontend-take-home.fetchrewards.com/form");
+      let res = await getApi(
+        "https://frontend-take-home.fetchrewards.com/form"
+      );
 
       setOccupation(res.occupations);
       let statesArr = res.states.map((d: any) => d.name);
@@ -28,16 +34,37 @@ export default function UserForm() {
     fetchApi();
   }, []);
 
-  const onChange = (e) => {
+  const onChange = (e: any) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.id]: e.target.value,
     }));
   };
 
-  const handleSubmit = (e: any) => {
+  const validateInput = () => {
+    for (const key in formData) {
+      if (formData[key] === null || formData[key] === "") {
+        setValidateData(false);
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(formData);
+
+    const isValid = validateInput();
+
+    if (!isValid) return;
+
+    setValidateData(true);
+    let resStatus = await postApi(
+      "https://frontend-take-home.fetchrewards.com/form",
+      formData
+    );
+
+    if (resStatus === 201) setIsSubmitted(true);
   };
 
   return (
@@ -45,6 +72,7 @@ export default function UserForm() {
       <Form>
         <div className="row">
           <TextFormGroup
+            value={formData?.name}
             onChange={onChange}
             controlId={"name"}
             label={"Full Name"}
@@ -54,6 +82,7 @@ export default function UserForm() {
 
         <div className="row">
           <TextFormGroup
+            value={formData?.email}
             onChange={onChange}
             controlId={"email"}
             label={"Email"}
@@ -63,6 +92,7 @@ export default function UserForm() {
 
         <div className="row">
           <TextFormGroup
+            value={formData?.password}
             onChange={onChange}
             controlId={"password"}
             label={"Password"}
@@ -72,6 +102,7 @@ export default function UserForm() {
 
         <div className="row">
           <SelectFormGroup
+            value={formData?.occupation}
             onChange={onChange}
             controlId={"occupation"}
             label={"Occupation"}
@@ -82,6 +113,7 @@ export default function UserForm() {
         </div>
         <div className="row">
           <SelectFormGroup
+            value={formData?.state}
             onChange={onChange}
             controlId={"state"}
             label={"State"}
@@ -90,10 +122,13 @@ export default function UserForm() {
             data={states}
           />
         </div>
-
+        {!validateData && <p>Please enter all the details</p>}
         <Button onClick={handleSubmit} variant="primary" type="submit">
           Submit
         </Button>
+        {isSubmitted && (
+          <p className="mt-2">Form has been submitted successfully </p>
+        )}
       </Form>
     </div>
   );

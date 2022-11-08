@@ -5,6 +5,7 @@ export default function TextFormGroup({
   controlId,
   label,
   placeholder,
+  value,
   onChange,
 }) {
   return (
@@ -16,6 +17,7 @@ export default function TextFormGroup({
           </div>
           <div className="col-5">
             <Form.Control
+              value={value}
               onChange={onChange}
               type="text"
               placeholder={placeholder}
