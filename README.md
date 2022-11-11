@@ -7,4 +7,8 @@ Follow the commands below
 3. npm start
 
 # Responside UI
+1. Form on Ipad
+![Form on Ipad] (https://github.com/beastjk07/FE-Take-Home-Test/blob/master/src/images/ipad.png)
 
+2. Form on Laptop(Large screens)
+![Form on Laptop] (https://github.com/beastjk07/FE-Take-Home-Test/blob/master/src/images/laptop.png)
