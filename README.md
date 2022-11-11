@@ -8,7 +8,7 @@ Follow the commands below
 
 # Responside UI
 1. Form on Ipad
-![Form on Ipad] (https://github.com/beastjk07/FE-Take-Home-Test/blob/master/src/images/ipad.png)
+![Form on Ipad] (https://github.com/beastjk07/FE-Take-Home-Test/blob/master/src/images/ipad.png?raw=true)
 
 2. Form on Laptop(Large screens)
-![Form on Laptop] (https://github.com/beastjk07/FE-Take-Home-Test/blob/master/src/images/laptop.png)
+![Form on Laptop] (https://github.com/beastjk07/FE-Take-Home-Test/blob/master/src/images/laptop.png?raw=true)
