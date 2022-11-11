@@ -1,3 +1,5 @@
+Completed the assignment using React.js (https://reactjs.org/)
+
 # Test this project on your local machine
 
 Follow the commands below
