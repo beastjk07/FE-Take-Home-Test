@@ -4,9 +4,9 @@ Completed the assignment using React.js (https://reactjs.org/)
 
 Follow the commands below
 
-1. git clone
-2. npm install
-3. npm start
+1. clone the repository using -> git clone https://github.com/beastjk07/FE-Take-Home-Test.git
+2. go to root folder and run -> npm install
+3. run -> npm start
 
 # Responside UI
 
