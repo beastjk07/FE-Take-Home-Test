@@ -21,6 +21,8 @@ export default function UserForm() {
 
   const [validateData, setValidateData] = useState(true);
 
+  const [validationMessage, setValidationMessage] = useState("");
+
   useEffect(() => {
     async function fetchApi() {
       let res = await getApi(
@@ -41,10 +43,30 @@ export default function UserForm() {
     }));
   };
 
+  const validateEmail = (email: string) => {
+    return /\S+@\S+\.\S+/.test(email);
+  };
+
   const validateInput = () => {
     for (const key in formData) {
       if (formData[key] === null || formData[key] === "") {
         setValidateData(false);
+        setValidationMessage("Please enter all the details");
+        return false;
+      } else if (key === "email" && !validateEmail(formData[key])) {
+        setValidateData(false);
+        setValidationMessage("Please enter valid email");
+        return false;
+      } else if (
+        key === "occupation" &&
+        formData[key] === "Select your occupation"
+      ) {
+        setValidateData(false);
+        setValidationMessage("Please enter valid occupation");
+        return false;
+      } else if (key === "state" && formData[key] === "Select your State") {
+        setValidateData(false);
+        setValidationMessage("Please enter valid state");
         return false;
       }
     }
@@ -68,68 +90,70 @@ export default function UserForm() {
   };
 
   return (
-    <div className="container">
-      <Form>
-        <div className="row">
-          <TextFormGroup
-            value={formData?.name}
-            onChange={onChange}
-            controlId={"name"}
-            label={"Full Name"}
-            placeholder={"Enter full name"}
-          />
-        </div>
+    <div style={{ width: "50%" }} className="container">
+      <div className="form__wrapper">
+        <Form>
+          <div className="row">
+            <TextFormGroup
+              value={formData?.name}
+              onChange={onChange}
+              controlId={"name"}
+              label={"Full Name"}
+              placeholder={"Enter full name"}
+            />
+          </div>
 
-        <div className="row">
-          <TextFormGroup
-            value={formData?.email}
-            onChange={onChange}
-            controlId={"email"}
-            label={"Email"}
-            placeholder={"Enter email"}
-          />
-        </div>
+          <div className="row">
+            <TextFormGroup
+              value={formData?.email}
+              onChange={onChange}
+              controlId={"email"}
+              label={"Email"}
+              placeholder={"Enter email"}
+            />
+          </div>
 
-        <div className="row">
-          <TextFormGroup
-            value={formData?.password}
-            onChange={onChange}
-            controlId={"password"}
-            label={"Password"}
-            placeholder={"Enter Password"}
-          />
-        </div>
+          <div className="row">
+            <TextFormGroup
+              value={formData?.password}
+              onChange={onChange}
+              controlId={"password"}
+              label={"Password"}
+              placeholder={"Enter Password"}
+            />
+          </div>
 
-        <div className="row">
-          <SelectFormGroup
-            value={formData?.occupation}
-            onChange={onChange}
-            controlId={"occupation"}
-            label={"Occupation"}
-            placeholder={"Select your occupation"}
-            type={"Occupation"}
-            data={occupation}
-          />
-        </div>
-        <div className="row">
-          <SelectFormGroup
-            value={formData?.state}
-            onChange={onChange}
-            controlId={"state"}
-            label={"State"}
-            placeholder={"Select your State"}
-            type={"State"}
-            data={states}
-          />
-        </div>
-        {!validateData && <p>Please enter all the details</p>}
-        <Button onClick={handleSubmit} variant="primary" type="submit">
-          Submit
-        </Button>
-        {isSubmitted && (
-          <p className="mt-2">Form has been submitted successfully </p>
-        )}
-      </Form>
+          <div className="row">
+            <SelectFormGroup
+              value={formData?.occupation}
+              onChange={onChange}
+              controlId={"occupation"}
+              label={"Occupation"}
+              placeholder={"Select your occupation"}
+              type={"Occupation"}
+              data={occupation}
+            />
+          </div>
+          <div className="row">
+            <SelectFormGroup
+              value={formData?.state}
+              onChange={onChange}
+              controlId={"state"}
+              label={"State"}
+              placeholder={"Select your State"}
+              type={"State"}
+              data={states}
+            />
+          </div>
+          {!validateData && <p>{validationMessage}</p>}
+          <Button onClick={handleSubmit} variant="primary" type="submit">
+            Submit
+          </Button>
+          {isSubmitted && validateData && (
+            <p className="mt-2">Form has been submitted successfully </p>
+          )}
+        </Form>
+      </div>
     </div>
   );
 }

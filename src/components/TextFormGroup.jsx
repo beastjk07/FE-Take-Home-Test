@@ -9,13 +9,13 @@ export default function TextFormGroup({
   onChange,
 }) {
   return (
-    <div className="col-6">
+    <div className="col-12">
       <Form.Group className="mb-3" controlId={controlId}>
         <div className="row">
-          <div className="col-3">
+          <div className="col-lg-6 col-md-12">
             <Form.Label>{label}</Form.Label>
           </div>
-          <div className="col-5">
+          <div className="col-lg-6 col-md-12">
             <Form.Control
               value={value}
               onChange={onChange}
